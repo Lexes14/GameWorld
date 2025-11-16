@@ -2,6 +2,8 @@
 comment0.target=GameWorld
 comment1.params=
 comment1.target=GameWorld()
+comment10.params=bossLevel
+comment10.target=void\ bossDefeated(int)
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
@@ -18,4 +20,4 @@ comment8.params=
 comment8.target=void\ gameWon()
 comment9.params=
 comment9.target=void\ restartGame()
-numComments=10
+numComments=11

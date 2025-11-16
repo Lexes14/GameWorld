@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=BossWeakPoint
+comment1.params=parent\ id\ radius\ angle
+comment1.target=BossWeakPoint(Boss,\ int,\ int,\ int)
+comment2.params=
+comment2.target=void\ createImages()
+comment3.params=
+comment3.target=void\ act()
+comment4.params=
+comment4.target=void\ updatePosition()
+comment5.params=
+comment5.target=void\ checkBulletCollision()
+comment6.params=
+comment6.target=void\ destroyWeakPoint()
+comment7.params=vulnerable
+comment7.target=void\ setVulnerable(boolean)
+comment8.params=
+comment8.target=boolean\ isDestroyed()
+numComments=9

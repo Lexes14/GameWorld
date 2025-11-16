@@ -8,9 +8,9 @@ public class Enemy extends Actor
     
     public Enemy()
     {
-        setImage("enemy.png"); // replace with your actual file name
+        setImage("enemy.png");
         GreenfootImage img = new GreenfootImage("enemy.png");
-        img.scale(80, 80);  // or whatever size you need
+        img.scale(80, 80);
         setImage(img);
   
         direction = Greenfoot.getRandomNumber(360);

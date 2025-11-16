@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=BossBullet
+comment1.params=speed\ damage
+comment1.target=BossBullet(int,\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ move()
+comment4.params=
+comment4.target=void\ checkPlayerCollision()
+comment5.params=
+comment5.target=int\ getDamage()
+numComments=6

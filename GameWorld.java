@@ -15,6 +15,11 @@ public class GameWorld extends World
     private GreenfootSound gameOverSound = new GreenfootSound("gameover.mp3");
 
     private boolean levelCompleteSoundPlayed = false;
+    
+    // ✅ BOSS SYSTEM VARIABLES
+    private boolean bossLevel = false;
+    private boolean bossDefeated = false;
+    private Boss currentBoss = null;
 
     public GameWorld()
     {    
@@ -77,10 +82,24 @@ public class GameWorld extends World
             }
         }
 
+        // ✅ MODIFIED: Check level completion (stars collected AND boss defeated if boss level)
         if (starsLeft == 0 && !levelComplete && !gameOver)
         {
-            levelComplete = true;
-            score += 100 * level;
+            if (bossLevel)
+            {
+                // Boss level - must defeat boss to complete
+                if (bossDefeated)
+                {
+                    levelComplete = true;
+                    score += 100 * level;
+                }
+            }
+            else
+            {
+                // Normal level - just collect stars
+                levelComplete = true;
+                score += 100 * level;
+            }
         }
     }
 
@@ -103,28 +122,56 @@ public class GameWorld extends World
     {
         removeObjects(getObjects(null));
 
+        // ✅ Check if this is a boss level (5, 10, 15, 20, 25...)
+        bossLevel = (levelNum % 5 == 0);
+        bossDefeated = false;
+
         addObject(new Player(), 100, 300);
 
-        int numStars = 3 + levelNum;
-        starsLeft = numStars;
-        for (int i = 0; i < numStars; i++)
+        if (bossLevel)
         {
-            int x = Greenfoot.getRandomNumber(600) + 150;
-            int y = Greenfoot.getRandomNumber(400) + 100;
-            addObject(new Star(), x, y);
-        }
+            // ✅ BOSS LEVEL - No enemies, fewer stars
+            int numStars = 2 + (levelNum / 10);  // Fewer stars on boss levels
+            starsLeft = numStars;
+            for (int i = 0; i < numStars; i++)
+            {
+                int x = Greenfoot.getRandomNumber(600) + 150;
+                int y = Greenfoot.getRandomNumber(400) + 100;
+                addObject(new Star(), x, y);
+            }
 
-        int numEnemies = levelNum;
-        for (int i = 0; i < numEnemies; i++)
+            // ✅ Spawn boss in center-right of screen
+            currentBoss = new Boss(levelNum);
+            addObject(currentBoss, 600, 300);
+
+            showText("⚠️ BOSS LEVEL " + levelNum + " ⚠️", 400, 300);
+            Greenfoot.delay(90);
+            showText("", 400, 300);
+        }
+        else
         {
-            int x = Greenfoot.getRandomNumber(400) + 300;
-            int y = Greenfoot.getRandomNumber(400) + 100;
-            addObject(new Enemy(), x, y);
-        }
+            // ✅ NORMAL LEVEL - Regular enemies and stars
+            int numStars = 3 + levelNum;
+            starsLeft = numStars;
+            for (int i = 0; i < numStars; i++)
+            {
+                int x = Greenfoot.getRandomNumber(600) + 150;
+                int y = Greenfoot.getRandomNumber(400) + 100;
+                addObject(new Star(), x, y);
+            }
 
-        showText("LEVEL " + levelNum + " - Collect all stars!", 400, 300);
-        Greenfoot.delay(60);
-        showText("", 400, 300);
+            int numEnemies = levelNum;
+            for (int i = 0; i < numEnemies; i++)
+            {
+                int x = Greenfoot.getRandomNumber(400) + 300;
+                int y = Greenfoot.getRandomNumber(400) + 100;
+                addObject(new Enemy(), x, y);
+            }
+
+            showText("LEVEL " + levelNum + " - Collect all stars!", 400, 300);
+            Greenfoot.delay(60);
+            showText("", 400, 300);
+        }
     }
 
     public void starCollected()
@@ -187,5 +234,21 @@ public class GameWorld extends World
         levelComplete = false;
         levelChangeTimer = 0;
         startLevel(1);
+    }
+    
+    // ✅ NEW METHOD: Called when boss is defeated
+    public void bossDefeated(int bossLevel)
+    {
+        bossDefeated = true;
+        
+        // Award massive bonus score for defeating boss
+        score += 500 * (bossLevel / 5);  // Level 5 boss = 500, Level 10 = 1000, etc.
+        
+        // Show victory message
+        showText("🎉 BOSS DEFEATED! 🎉", 400, 250);
+        Greenfoot.delay(60);
+        showText("", 400, 250);
+        
+        currentBoss = null;
     }
 }
