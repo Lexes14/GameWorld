@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Player
+comment1.params=
+comment1.target=Player()
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ handleMovement()
+comment4.params=
+comment4.target=void\ handleShooting()
+comment5.params=
+comment5.target=void\ checkCollisions()
+comment6.params=
+comment6.target=void\ handleImmunity()
+comment7.params=
+comment7.target=void\ startImmunity()
+numComments=8
