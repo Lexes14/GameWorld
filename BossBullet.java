@@ -1,5 +1,4 @@
 import greenfoot.*;
-
 public class BossBullet extends Actor
 {
     private int speed;
@@ -22,6 +21,9 @@ public class BossBullet extends Actor
     {
         move();
         checkPlayerCollision();
+        
+        // Check if bullet was removed in checkPlayerCollision
+        if (getWorld() == null) return;
         
         if (isAtEdge())
         {
